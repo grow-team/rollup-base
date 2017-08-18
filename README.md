@@ -13,12 +13,23 @@
 
 # 二、使用方式
 
-#### 1、通过命令行，相当于使用cli工具（忽略）
+#### 1、通过命令行，相当于使用cli工具
+
+#### 1-1、直接在dos窗口输入命令
+#### 1-2、用rollup.config.js文件
+
+常用命令：
+    
+    rollup -c(config) filepath?
+    rollup -w(watch) filepath?
+    
+[所有命令](https://github.com/rollup/rollup/wiki/Command-Line-Interface)
+    
 
 #### 2、通过[javscript api](https://github.com/rollup/rollup/wiki/JavaScript-API)使用
 
 #### 2-1、方法 rollup.rollup( options )  返回：Promise promis中result参数为bundle.
-传入参数：
+关键参数：
 
     entry：入口文件路径
     cache：缓存之前的返回
@@ -28,7 +39,7 @@
     ....
     
 #### 2-2、方法 bundle.generate( options ) 返回：Promise 其中resolves返回{ code, map }对象
-传入参数
+关键参数
 
     format：amd -----返回amd规范的js，像是Require.js
             cjs -----CommonJS
@@ -38,12 +49,28 @@
     注意：使用iife和umd两种模式时候，需要指定moduleName
 
 
-.......待续！
+#### 2-3、方法 bundle.write( options ) 返回:Promise，同时将内容写入对应文件
+
+关键参数
+
+    dest：要写入文件的地址
 
 
 # 三、关键技术点
 
 1、Tree shaking。。。
+
+    tree-shaking 都是因为 ES6 modules 的静态特性才得以实现的。ES6 modules 的 import 和 export statements 相比完全动态的 CommonJS require，有着本质的区别。举例来说：
+    1. 只能作为模块顶层的语句出现，不能出现在 function 里面或是 if 里面。（ECMA-262 15.2)
+    2. import 的模块名只能是字符串常量。(ECMA-262 15.2.2)
+    3. 不管 import 的语句出现的位置在哪里，在模块初始化的时候所有的 import 都必须已经导入完成。换句话说，ES6 imports are hoisted。(ECMA-262 15.2.1.16.4 - 8.a)
+    4. import binding 是 immutable 的，类似 const。比如说你不能 import { a } from './a' 然后给 a 赋值个其他什么东西。(ECMA-262 15.2.1.16.4 - 12.c.3)
+    
+    这些设计虽然使得灵活性不如 CommonJS 的 require，但却保证了 ES6 modules 的依赖关系是确定 (deterministic) 的，和运行时的状态无关，从而也就保证了 ES6 modules 是可以进行可靠的静态分析的。对于主要在服务端运行的 Node 来说，所有的代码都在本地，按需动态 require 即可，但对于要下发到客户端的 web 代码而言，要做到高效的按需使用，不能等到代码执行了才知道模块的依赖，必须要从模块的静态分析入手。这是 ES6 modules 在设计时的一个重要考量，也是为什么没有直接采用 CommonJS。正是基于这个基础上，才使得 tree-shaking 成为可能（这也是为什么 rollup 和 webpack 2 都要用 ES6 module syntax 才能 tree-shaking），所以说与其说 tree-shaking 这个技术怎么了不起，不如说是 ES6 module 的设计在模块静态分析上的种种考量值得赞赏。
+    
+    [出处](https://www.zhihu.com/question/41922432/answer/93346223)
+
+
 
 2、rullup.config.js的export可以是数组
 

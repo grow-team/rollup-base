@@ -25,6 +25,7 @@
     "rollup-plugin-uglify": "^2.0.1"
   },
   "dependencies": {
+    "fs": "0.0.1-security",
     "ms": "^2.0.0",
     "rollup": "^0.47.6"
   }
