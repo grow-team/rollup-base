@@ -12,7 +12,6 @@ let cache;
  * rollup方法返回Promise对象
  * promise的resolve值是bundle
  * 
- * 
  */
 rollup.rollup({
   entry: './src/main.ts',
@@ -29,7 +28,7 @@ rollup.rollup({
   cache: cache
 }).then( function ( bundle ) {
   cache = bundle;
-
+  //write方法用来写入文件内容
   bundle.write({
     format: 'cjs',
     dest: './apidemo/_bundle.js'
