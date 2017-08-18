@@ -66,6 +66,11 @@
 4、[rollup-plugin-typescript](https://github.com/rollup/rollup-plugin-typescript)
 
 作用：恰如其名，在rollup中使用typescript
+
+5、[rollup-plugin-uglify](https://github.com/TrySound/rollup-plugin-uglify)
+
+作用：在rollup中使用uglify压缩混淆代码
+
  
  # 官方示例
 
