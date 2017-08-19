@@ -58,7 +58,7 @@
 
 # 三、关键技术点
 
-1、Tree shaking。。。
+1、Tree shaking。。。(todo 源码实现）
 
     tree-shaking 都是因为 ES6 modules 的静态特性才得以实现的。ES6 modules 的 import 和 export statements 相比完全动态的 CommonJS require，有着本质的区别。举例来说：
     1. 只能作为模块顶层的语句出现，不能出现在 function 里面或是 if 里面。（ECMA-262 15.2)
